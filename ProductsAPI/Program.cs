@@ -14,7 +14,7 @@ builder.Services.RegisterMapsterConfiguration();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<DataContext>(options =>
-{ options.UseSqlite(builder.Configuration.GetConnectionString("ShopRepo"), b => b.MigrationsAssembly("ProductsApi.DataAccess")); });
+{ options.UseSqlite(builder.Configuration.GetConnectionString("ShopRepo"), b => b.MigrationsAssembly("ProductsAPI.DataAccess")); });
 
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();

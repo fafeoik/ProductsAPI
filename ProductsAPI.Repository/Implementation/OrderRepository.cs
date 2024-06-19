@@ -17,12 +17,6 @@ namespace ProductsApi.Repository.Implementation
             
         }
 
-        //public virtual async Task<List<OrderModel>> GetAllAsync(Expression<Func<OrderModel, bool>> predicate) => await _context.Set<OrderModel>()
-        //    .Where(predicate)
-        //    .Include(a => a.ProductOrders)
-        //    .ThenInclude(ar => ar.Product)
-        //    .ToListAsync();
-
         public override Task<List<OrderModel>> GetAllAsync(Expression<Func<OrderModel, bool>>?[] predicates = null,
                                          Func<IQueryable<OrderModel>, IQueryable<OrderModel>>? queryFunc = null,
                                          int? take = null,

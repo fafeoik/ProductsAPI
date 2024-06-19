@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ProductAPI.DataAccess\ProductsAPI.DataAccess.csproj" />
+    <ProjectReference Include="..\ProductsAPI.DataAccess\ProductsAPI.DataAccess.csproj" />
     <ProjectReference Include="..\ProductsAPI.Repository\ProductsAPI.Repository.csproj" />
   </ItemGroup>
 

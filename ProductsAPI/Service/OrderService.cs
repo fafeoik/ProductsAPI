@@ -33,18 +33,7 @@ namespace ProductsApi.Service
             var predicates = new List<Expression<Func<OrderModel, bool>>>();
 
             if (orderQuery.Date != null)
-            {
-                DateOnly date;
-
-                bool isParsed = DateOnly.TryParse(orderQuery.Date, out date);
-
-                if (!isParsed)
-                {
-                    
-                }
-
-                predicates.Add(order => order.Date == date);
-            }
+                predicates.Add(order => order.Date == DateOnly.Parse(orderQuery.Date));
 
             var orders = await _orderRepository.GetAllAsync(predicates.ToArray());
 
