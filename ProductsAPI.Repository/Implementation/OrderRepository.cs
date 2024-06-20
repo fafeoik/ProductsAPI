@@ -18,7 +18,6 @@ namespace ProductsApi.Repository.Implementation
         }
 
         public override Task<List<OrderModel>> GetAllAsync(Expression<Func<OrderModel, bool>>?[] predicates = null,
-                                         Func<IQueryable<OrderModel>, IQueryable<OrderModel>>? queryFunc = null,
                                          int? take = null,
                                          params Expression<Func<OrderModel, object?>>[] includes)
         {
@@ -30,9 +29,6 @@ namespace ProductsApi.Repository.Implementation
 
             if (predicates != null)
                 query = predicates.Aggregate(query, (currentQuery, predicate) => currentQuery.Where(predicate));
-
-            if (queryFunc != null)
-                query = queryFunc(query);
 
             if (take is not null)
                 query = query.Take(take.Value);

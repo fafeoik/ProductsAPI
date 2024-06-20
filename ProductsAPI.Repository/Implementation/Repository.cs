@@ -17,7 +17,6 @@ namespace ProductsApi.Repository.Implementation
         public Repository(TContext dbContext) => _context = dbContext;
 
         public virtual Task<List<T>> GetAllAsync(Expression<Func<T, bool>>[]? predicates = null,
-                                             Func<IQueryable<T>, IQueryable<T>>? queryFunc = null,
                                              int? take = null,
                                              params Expression<Func<T, object?>>[] includes)
         {
@@ -28,9 +27,6 @@ namespace ProductsApi.Repository.Implementation
 
             if (predicates != null)
                 query = predicates.Aggregate(query, (currentQuery, predicate) => currentQuery.Where(predicate));
-
-            if (queryFunc != null)
-                query = queryFunc(query);
 
             if (take != null)
                 query = query.Take(take.Value);

@@ -11,7 +11,6 @@ namespace ProductsApi.Repository
     public interface IReadOnlyRepository<T> where T : class
     {
         Task<List<T>> GetAllAsync(Expression<Func<T, bool>>?[] predicates = null,
-                                         Func<IQueryable<T>, IQueryable<T>>? queryFunc = null,
                                          int? take = null,
                                          params Expression<Func<T, object?>>[] includes);
         Task<T?> GetByIdAsync(int Id);

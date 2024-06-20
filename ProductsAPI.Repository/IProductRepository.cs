@@ -10,6 +10,8 @@ namespace ProductsApi.Repository
 {
     public interface IProductRepository : IRepository<ProductModel>
     {
-        Task<List<ProductModel>> GetAllAsync(Expression<Func<ProductModel, bool>> predicate);
+        Task<List<ProductModel>> GetAllAsync(Expression<Func<ProductModel, bool>>?[] predicates = null,
+                                          int? take = null,
+                                          params Expression<Func<ProductModel, object?>>[] includes);
     }
 }

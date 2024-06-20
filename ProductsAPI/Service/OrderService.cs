@@ -32,8 +32,13 @@ namespace ProductsApi.Service
         {
             var predicates = new List<Expression<Func<OrderModel, bool>>>();
 
+            DateOnly date;
+
+            if(!DateOnly.TryParse(orderQuery.Date, out date))
+                throw new ArgumentException(nameof(orderQuery.Date));
+
             if (orderQuery.Date != null)
-                predicates.Add(order => order.Date == DateOnly.Parse(orderQuery.Date));
+                predicates.Add(order => order.Date == date);
 
             var orders = await _orderRepository.GetAllAsync(predicates.ToArray());
 
@@ -63,6 +68,7 @@ namespace ProductsApi.Service
                 accountToUpdate.Date = DateOnly.Parse(model.Date);
                 await _orderRepository.Update(accountToUpdate);
             }
+
             return accountToUpdate.Adapt<OrderDTO>();
         }
 

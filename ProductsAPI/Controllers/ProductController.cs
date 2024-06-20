@@ -2,6 +2,7 @@
 using ProductsApi.DataAccess.Models;
 using ProductsApi.DTO;
 using ProductsApi.Service.Interfaces;
+using ProductsAPI.Queries;
 
 namespace ProductsApi.Controllers
 {
@@ -20,11 +21,11 @@ namespace ProductsApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ProductDTO>>> GetProducts()
+        public async Task<ActionResult<List<ProductDTO>>> GetAll([FromQuery] ProductQuery productQuery)
         {
             try
             {
-                var accounts = await _productService.GetAll();
+                var accounts = await _productService.GetAllAsync(productQuery);
 
                 return !accounts.Any()
                 ? NotFound()
@@ -47,40 +48,6 @@ namespace ProductsApi.Controllers
                 return account == null
                 ? NotFound()
                 : Ok(account);
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "There was a database failure");
-            }
-        }
-
-        [HttpGet("searchname")]
-        public async Task<ActionResult<List<ProductDTO>>> SearchByName(string name)
-        {
-            try
-            {
-                var accounts = await _productService.GetAllByNameAsync(name);
-
-                return !accounts.Any()
-                ? NotFound()
-                : Ok(accounts);
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "There was a database failure");
-            }
-        }
-
-        [HttpGet("price")]
-        public async Task<ActionResult<List<ProductDTO>>> SearchAbovePrice(int price)
-        {
-            try
-            {
-                var accounts = await _productService.GetAllAbovePriceAsync(price);
-
-                return !accounts.Any()
-                ? NotFound()
-                : Ok(accounts);
             }
             catch (Exception)
             {

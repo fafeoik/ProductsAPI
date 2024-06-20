@@ -4,6 +4,10 @@ using ProductsApi.Service.Interfaces;
 using ProductsApi.DataAccess.Models;
 using ProductsApi.DTO;
 using System;
+using ProductsAPI.Queries;
+using ProductsApi.Queries;
+using ProductsApi.Repository.Implementation;
+using System.Linq.Expressions;
 
 namespace ProductsApi.Service
 {
@@ -22,22 +26,25 @@ namespace ProductsApi.Service
             return account.Adapt<ProductDTO>();
         }
 
-        public async Task<List<ProductDTO>> GetAll()
+        public async Task<List<ProductDTO>> GetAllAsync(ProductQuery productQuery)
         {
-            var accounts = await _productRepository.GetAllAsync(o => o != null);
-            return accounts.Adapt<List<ProductDTO>>();
-        }
+            var predicates = new List<Expression<Func<ProductModel, bool>>>();
 
-        public async Task<List<ProductDTO>> GetAllAbovePriceAsync(int price)
-        {
-            var accounts = await _productRepository.GetAllAsync(a => a.Price >= price);
-            return accounts.Adapt<List<ProductDTO>>();
-        }
+            if (productQuery.Name != null)
+                predicates.Add(product => product.Name == productQuery.Name);
 
-        public async Task<List<ProductDTO>> GetAllByNameAsync(string name)
-        {
-            var accounts = await _productRepository.GetAllAsync(b => b.Name.Contains(name));
-            return accounts.Adapt<List<ProductDTO>>();
+            if (productQuery.AbovePrice != null && productQuery.BelowPrice != null)
+                predicates.Add(product => product.Price >= productQuery.AbovePrice && product.Price <= productQuery.BelowPrice);
+
+            if (productQuery.BelowPrice != null)
+                predicates.Add(product => product.Price <= productQuery.BelowPrice);
+
+            if (productQuery.AbovePrice != null)
+                predicates.Add(product => product.Price >= productQuery.AbovePrice);
+
+            var products = await _productRepository.GetAllAsync(predicates.ToArray());
+
+            return products.Adapt<List<ProductDTO>>();
         }
 
         public async Task<bool> AddAsync(ProductOrderlessDTO product)

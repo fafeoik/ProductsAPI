@@ -16,11 +16,20 @@ namespace ProductsApi.Repository.Implementation
         {
             
         }
-        
-        public virtual async Task<List<ProductModel>> GetAllAsync(Expression<Func<ProductModel, bool>> predicate) => await _context.Set<ProductModel>()
-            .Where(predicate)
-            .Include(a => a.ProductOrders)
-            .ThenInclude(ar => ar.Order)
-            .ToListAsync();
+
+        public override Task<List<ProductModel>> GetAllAsync(Expression<Func<ProductModel, bool>>?[] predicates = null,
+                                         int? take = null,
+                                         params Expression<Func<ProductModel, object?>>[] includes)
+        {
+            IQueryable<ProductModel> query = _context.Set<ProductModel>();
+
+            if (predicates != null)
+                query = predicates.Aggregate(query, (currentQuery, predicate) => currentQuery.Where(predicate));
+
+            if (take is not null)
+                query = query.Take(take.Value);
+
+            return query.ToListAsync();
+        }
     }
 }
