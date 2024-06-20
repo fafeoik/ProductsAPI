@@ -22,10 +22,10 @@ namespace ProductsApi.DataAccess.Models
         [Key]
         public int Id { get; set; }
         [Required]
-        public string Name { get; set; }
+        public string? Name { get; set; }
         [Required]
         [Range(0, int.MaxValue, ErrorMessage = "Цена должна быть больше 0.")]
-        public int Price { get; set; }
+        public int? Price { get; set; }
         public virtual ICollection<ProductOrderModel> ProductOrders { get; set; } = new HashSet<ProductOrderModel>();
     }
 }

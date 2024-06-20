@@ -8,6 +8,6 @@ namespace ProductsApi.DTO
         public string? Name { get; set; }
         [Required]
         [Range(0, int.MaxValue, ErrorMessage = "Цена должна быть больше 0.")]
-        public int Price { get; set; }
+        public int? Price { get; set; }
     }
 }

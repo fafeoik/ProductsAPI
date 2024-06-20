@@ -84,6 +84,12 @@ namespace ProductsApi.Service
         public async Task<bool> DeleteAsync(int Id)
         {
             var accountToDelete = await _productRepository.GetByIdAsync(Id);
+
+            if (accountToDelete == null)
+            {
+                return false;
+            }
+
             return await _productRepository.DeleteAsync(accountToDelete);
         }
     }
