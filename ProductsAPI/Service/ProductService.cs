@@ -47,7 +47,7 @@ namespace ProductsApi.Service
             return products.Adapt<List<ProductGetDTO>>();
         }
 
-        public async Task<bool> AddAsync(ProductOrderlessDTO product)
+        public async Task<bool> AddAsync(ProductDTO product)
         {
             var model = product.Adapt<ProductModel>();
             var createdId = await _productRepository.AddAsync(model);
@@ -68,7 +68,7 @@ namespace ProductsApi.Service
             }
         }
 
-        public async Task<ProductUpdateDTO> UpdateAsync(int Id, ProductUpdateDTO model)
+        public async Task<ProductDTO> UpdateAsync(int Id, ProductDTO model)
         {
             var accountToUpdate = await _productRepository.GetByIdAsync(Id);
 
@@ -78,7 +78,7 @@ namespace ProductsApi.Service
                 accountToUpdate.Price = model.Price;
                 await _productRepository.Update(accountToUpdate);
             }
-            return accountToUpdate.Adapt<ProductUpdateDTO>();
+            return accountToUpdate.Adapt<ProductDTO>();
         }
 
         public async Task<bool> DeleteAsync(int Id)

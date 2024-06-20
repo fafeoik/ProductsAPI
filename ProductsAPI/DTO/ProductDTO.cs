@@ -2,7 +2,7 @@
 
 namespace ProductsApi.DTO
 {
-    public class ProductOrderlessDTO
+    public class ProductDTO
     {
         [Required]
         public string? Name { get; set; }

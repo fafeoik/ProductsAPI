@@ -8,9 +8,9 @@ namespace ProductsApi.Service.Interfaces
     {
         Task<ProductGetDTO> GetByIdAsync(int id);
         Task<List<ProductGetDTO>> GetAllAsync(ProductQuery productQuery);
-        Task<bool> AddAsync(ProductOrderlessDTO model);
+        Task<bool> AddAsync(ProductDTO model);
         Task AddRangeAsync(List<ProductModel> models);
-        Task<ProductUpdateDTO> UpdateAsync(int Id, ProductUpdateDTO model);
+        Task<ProductDTO> UpdateAsync(int Id, ProductDTO model);
         Task<bool> DeleteAsync(int Id);
     }
 }

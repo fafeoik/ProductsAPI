@@ -56,7 +56,7 @@ namespace ProductsApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(ProductOrderlessDTO product)
+        public async Task<IActionResult> Post(ProductDTO product)
         {
             try
             {
@@ -70,7 +70,7 @@ namespace ProductsApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<ProductUpdateDTO>> Put(int id, ProductUpdateDTO product)
+        public async Task<ActionResult<ProductDTO>> Put(int id, ProductDTO product)
         {
             try
             {

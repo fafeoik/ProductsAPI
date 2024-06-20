@@ -6,6 +6,6 @@ namespace ProductsApi.DTO
     {
         public int Id { get; set; }
         public string? Date { get; set; }
-        public List<ProductOrderlessDTO>? Products { get; set; }
+        public List<ProductDTO>? Products { get; set; }
     }
 }
