@@ -21,7 +21,7 @@ namespace ProductsApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ProductDTO>>> GetAll([FromQuery] ProductQuery productQuery)
+        public async Task<ActionResult<List<ProductGetDTO>>> GetAll([FromQuery] ProductQuery productQuery)
         {
             try
             {
@@ -38,8 +38,8 @@ namespace ProductsApi.Controllers
         }
 
 
-        [HttpGet("{Id}")]
-        public async Task<ActionResult<ProductDTO>> GetProductById(int id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ProductGetDTO>> GetProductById(int id)
         {
             try
             {
@@ -69,12 +69,12 @@ namespace ProductsApi.Controllers
             }
         }
 
-        [HttpPut("{Id}")]
-        public async Task<ActionResult<ProductDTO>> Put(int Id, ProductUpdateDTO product)
+        [HttpPut("{id}")]
+        public async Task<ActionResult<ProductUpdateDTO>> Put(int id, ProductUpdateDTO product)
         {
             try
             {
-                var accountToUpdate = await _productService.UpdateAsync(Id, product);
+                var accountToUpdate = await _productService.UpdateAsync(id, product);
 
                 if (accountToUpdate != null)
                 {
@@ -82,7 +82,7 @@ namespace ProductsApi.Controllers
                 }
                 else
                 {
-                    return NotFound($"Can't find account with Id {Id}");
+                    return NotFound($"Can't find account with Id {id}");
                 }
             }
             catch (Exception ex)

@@ -14,13 +14,13 @@ namespace ProductsApi.Service
             _productOrderRepository = productOrderRepository;
         }
 
-        public async Task AddAsync(OrderPostDTO order)
+        public async Task AddAsync(OrderPostDTO order, int orderId)
         {
             List<ProductOrderModel> models = new List<ProductOrderModel>();
 
             foreach (var id in order.ProductIds)
             {
-                models.Add(new ProductOrderModel() { OrderId = order.Id, ProductId = id });
+                models.Add(new ProductOrderModel() { OrderId = orderId, ProductId = id });
             }
 
              await _productOrderRepository.AddAsync(models);

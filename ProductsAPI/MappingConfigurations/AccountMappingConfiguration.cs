@@ -10,19 +10,11 @@ namespace ProductsApi.MappingConfigurations
     {
         public static void RegisterMapsterConfiguration(this IServiceCollection services)
         {
-            TypeAdapterConfig<List<ProductModel>, List<ProductDTO>>
+            TypeAdapterConfig<List<OrderModel>, List<OrderGetDTO>>
                 .NewConfig()
-                .Map(dest => dest, src => src.Select(p => p.Adapt<ProductDTO>()));
+                .Map(dest => dest, src => src.Select(o => o.Adapt<OrderGetDTO>()));
 
-            TypeAdapterConfig<List<OrderModel>, List<OrderDTO>>
-                .NewConfig()
-                .Map(dest => dest, src => src.Select(o => o.Adapt<OrderDTO>()));
-
-            TypeAdapterConfig<ProductModel, ProductDTO>
-            .NewConfig()
-            .Map(dest => dest.Orders, src => src.ProductOrders.Select(po => new OrderModel(po.Order)));
-
-            TypeAdapterConfig<OrderModel, OrderDTO>
+            TypeAdapterConfig<OrderModel, OrderGetDTO>
             .NewConfig()
             .Map(dest => dest.Products, src => src.ProductOrders.Select(po => new ProductModel(po.Product)));
 

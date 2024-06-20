@@ -22,54 +22,56 @@ namespace ProductsApi.Service
             _productOrderService = productOrderService;
         }
 
-        public async Task<OrderDTO> GetByIdAsync(int id)
+        public async Task<OrderGetDTO> GetByIdAsync(int id)
         {
             var order = await _orderRepository.GetByIdAsync(id);
-            return order.Adapt<OrderDTO>();
+            return order.Adapt<OrderGetDTO>();
         }
 
-        public async Task<List<OrderDTO>> GetAllAsync(OrderQuery orderQuery)
+        public async Task<List<OrderGetDTO>> GetAllAsync(OrderQuery orderQuery)
         {
             var predicates = new List<Expression<Func<OrderModel, bool>>>();
 
-            DateOnly date;
-
-            if(!DateOnly.TryParse(orderQuery.Date, out date))
-                throw new ArgumentException(nameof(orderQuery.Date));
-
             if (orderQuery.Date != null)
-                predicates.Add(order => order.Date == date);
+            {
+                if (!DateOnly.TryParse(orderQuery.Date, out DateOnly date))
+                    throw new ArgumentException(nameof(orderQuery.Date));
 
+                predicates.Add(order => order.Date == date);
+            }
+               
             var orders = await _orderRepository.GetAllAsync(predicates.ToArray());
 
-            return orders.Adapt<List<OrderDTO>>();
+            return orders.Adapt<List<OrderGetDTO>>();
         }
 
         public async Task<bool> AddAsync(OrderPostDTO orderDTO)
         {
             var orderModel = orderDTO.Adapt<OrderModel>();
+            orderModel.Date = DateOnly.FromDateTime(DateTime.Now);
+
             var createdId = await _orderRepository.AddAsync(orderModel);
 
             if (orderDTO.ProductIds != null && createdId > 0)
             {
-                await _productOrderService.AddAsync(orderDTO);
+                await _productOrderService.AddAsync(orderDTO, createdId);
                 return true;
             }
 
             return false;
         }
 
-        public async Task<OrderDTO> UpdateAsync(int Id, OrderDateDTO model)
+        public async Task<OrderGetDTO> UpdateAsync(int Id, OrderPutDTO order)
         {
-            var accountToUpdate = await _orderRepository.GetByIdAsync(Id);
+            var orderToUpdate = await _orderRepository.GetByIdAsync(Id);
 
-            if (accountToUpdate != null)
+            if (orderToUpdate != null)
             {
-                accountToUpdate.Date = DateOnly.Parse(model.Date);
-                await _orderRepository.Update(accountToUpdate);
+                orderToUpdate.Date = DateOnly.Parse(order.Date);
+                await _orderRepository.Update(orderToUpdate);
             }
 
-            return accountToUpdate.Adapt<OrderDTO>();
+            return orderToUpdate.Adapt<OrderGetDTO>();
         }
 
         public async Task<bool> DeleteAsync(int Id)

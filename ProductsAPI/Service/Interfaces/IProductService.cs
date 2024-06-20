@@ -6,11 +6,11 @@ namespace ProductsApi.Service.Interfaces
 {
     public interface IProductService
     {
-        Task<ProductDTO> GetByIdAsync(int id);
-        Task<List<ProductDTO>> GetAllAsync(ProductQuery productQuery);
+        Task<ProductGetDTO> GetByIdAsync(int id);
+        Task<List<ProductGetDTO>> GetAllAsync(ProductQuery productQuery);
         Task<bool> AddAsync(ProductOrderlessDTO model);
         Task AddRangeAsync(List<ProductModel> models);
-        Task<ProductDTO> UpdateAsync(int Id, ProductUpdateDTO model);
+        Task<ProductUpdateDTO> UpdateAsync(int Id, ProductUpdateDTO model);
         Task<bool> DeleteAsync(int Id);
     }
 }

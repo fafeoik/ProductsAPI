@@ -2,11 +2,10 @@
 
 namespace ProductsApi.DTO
 {
-    public class ProductDTO
+    public class ProductGetDTO
     {
         public int Id { get; set; }
         public string? Name { get; set; }
         public int Price { get; set; }
-        public List<OrderDTO>? Orders { get; set; }
     }
 }

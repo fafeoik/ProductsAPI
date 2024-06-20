@@ -6,10 +6,10 @@ namespace ProductsApi.Service.Interfaces
 {
     public interface IOrderService
     {
-        Task<OrderDTO> GetByIdAsync(int id);
-        Task<List<OrderDTO>> GetAllAsync(OrderQuery orderQuery);
-        Task<bool> AddAsync(OrderPostDTO model);
-        Task<OrderDTO> UpdateAsync(int Id, OrderDateDTO model);
+        Task<OrderGetDTO> GetByIdAsync(int id);
+        Task<List<OrderGetDTO>> GetAllAsync(OrderQuery orderQuery);
+        Task<bool> AddAsync(OrderPostDTO order);
+        Task<OrderGetDTO> UpdateAsync(int Id, OrderPutDTO order);
         Task<bool> DeleteAsync(int Id);
     }
 }

@@ -14,7 +14,7 @@ namespace ProductsApi.Repository.Implementation
     {
         public OrderRepository(DataContext context) : base(context)
         {
-            
+
         }
 
         public override Task<List<OrderModel>> GetAllAsync(Expression<Func<OrderModel, bool>>?[] predicates = null,
@@ -35,7 +35,17 @@ namespace ProductsApi.Repository.Implementation
 
             return query.ToListAsync();
         }
+
+        public override async Task<OrderModel?> GetByIdAsync(int Id)
+        {
+            IQueryable<OrderModel> query =_context.Set<OrderModel>();
+            query = query
+                .Include(utilAcc => utilAcc.ProductOrders)
+                .ThenInclude(rua => rua.Product);
+
+            return await query.SingleOrDefaultAsync(order => order.Id == Id);
+        }
     }
 
-    
+
 }

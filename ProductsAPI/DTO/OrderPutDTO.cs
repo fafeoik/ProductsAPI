@@ -2,8 +2,8 @@
 
 namespace ProductsApi.DTO
 {
-    public class OrderDateDTO
+    public class OrderPutDTO
     {
-        public string Date { get; set; }
+        public string? Date { get; set; }
     }
 }

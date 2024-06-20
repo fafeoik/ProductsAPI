@@ -34,7 +34,7 @@ namespace ProductsApi.Repository.Implementation
             return query.ToListAsync();
         }
 
-        public async Task<T?> GetByIdAsync(int Id) => await _context.Set<T>().FindAsync(Id);
+        public virtual async Task<T?> GetByIdAsync(int Id) => await _context.Set<T>().FindAsync(Id);
 
         public async Task<int> AddAsync(T entity)
         {

@@ -20,13 +20,13 @@ namespace ProductsApi.Service
             _productRepository = productRepository;
         }
 
-        public async Task<ProductDTO> GetByIdAsync(int id)
+        public async Task<ProductGetDTO> GetByIdAsync(int id)
         {
             var account = await _productRepository.GetByIdAsync(id);
-            return account.Adapt<ProductDTO>();
+            return account.Adapt<ProductGetDTO>();
         }
 
-        public async Task<List<ProductDTO>> GetAllAsync(ProductQuery productQuery)
+        public async Task<List<ProductGetDTO>> GetAllAsync(ProductQuery productQuery)
         {
             var predicates = new List<Expression<Func<ProductModel, bool>>>();
 
@@ -44,7 +44,7 @@ namespace ProductsApi.Service
 
             var products = await _productRepository.GetAllAsync(predicates.ToArray());
 
-            return products.Adapt<List<ProductDTO>>();
+            return products.Adapt<List<ProductGetDTO>>();
         }
 
         public async Task<bool> AddAsync(ProductOrderlessDTO product)
@@ -68,7 +68,7 @@ namespace ProductsApi.Service
             }
         }
 
-        public async Task<ProductDTO> UpdateAsync(int Id, ProductUpdateDTO model)
+        public async Task<ProductUpdateDTO> UpdateAsync(int Id, ProductUpdateDTO model)
         {
             var accountToUpdate = await _productRepository.GetByIdAsync(Id);
 
@@ -78,7 +78,7 @@ namespace ProductsApi.Service
                 accountToUpdate.Price = model.Price;
                 await _productRepository.Update(accountToUpdate);
             }
-            return accountToUpdate.Adapt<ProductDTO>();
+            return accountToUpdate.Adapt<ProductUpdateDTO>();
         }
 
         public async Task<bool> DeleteAsync(int Id)
