@@ -11,8 +11,8 @@ namespace ProductsApi.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private IProductService _productService;
-        private IOrderService _orderService;
+        private readonly IProductService _productService;
+        private readonly IOrderService _orderService;
 
         public ProductController(IProductService productService, IOrderService orderService)
         {
