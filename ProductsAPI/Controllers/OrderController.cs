@@ -80,7 +80,7 @@ namespace ProductsApi.Controllers
                 }
                 else
                 {
-                    return NotFound($"Can't find account with Id {id}");
+                    return NotFound($"Can't find order with Id {id}");
                 }
             }
             catch (Exception ex)
@@ -95,7 +95,7 @@ namespace ProductsApi.Controllers
             try
             {
                 return await _orderService.DeleteAsync(Id) ? Ok()
-                : NotFound($"Can't find account with Id {Id}");
+                : NotFound($"Can't find order with Id {Id}");
             }
             catch (Exception ex)
             {
