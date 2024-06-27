@@ -19,6 +19,7 @@ namespace ProductsApi.Repository.Implementation
 
         public override Task<List<ProductModel>> GetAllAsync(Expression<Func<ProductModel, bool>>?[] predicates = null,
                                          int? take = null,
+                                         int? skip = null,
                                          params Expression<Func<ProductModel, object?>>[] includes)
         {
             IQueryable<ProductModel> query = _context.Set<ProductModel>();
@@ -26,7 +27,10 @@ namespace ProductsApi.Repository.Implementation
             if (predicates != null)
                 query = predicates.Aggregate(query, (currentQuery, predicate) => currentQuery.Where(predicate));
 
-            if (take is not null)
+            if (skip != null)
+                query = query.Skip(skip.Value);
+
+            if (take != null)
                 query = query.Take(take.Value);
 
             return query.ToListAsync();

@@ -12,6 +12,7 @@ namespace ProductsApi.Repository
     {
         Task<List<ProductModel>> GetAllAsync(Expression<Func<ProductModel, bool>>?[] predicates = null,
                                           int? take = null,
+                                          int? skip = null,
                                           params Expression<Func<ProductModel, object?>>[] includes);
     }
 }

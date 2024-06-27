@@ -40,7 +40,7 @@ namespace ProductsApi.Service
                 predicates.Add(order => order.Date == date);
             }
                
-            var orders = await _orderRepository.GetAllAsync(predicates.ToArray());
+            var orders = await _orderRepository.GetAllAsync(predicates.ToArray(), orderQuery.Take, orderQuery.Skip);
 
             return orders.Adapt<List<OrderGetDTO>>();
         }

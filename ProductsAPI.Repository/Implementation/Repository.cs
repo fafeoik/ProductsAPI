@@ -18,6 +18,7 @@ namespace ProductsApi.Repository.Implementation
 
         public virtual Task<List<T>> GetAllAsync(Expression<Func<T, bool>>[]? predicates = null,
                                              int? take = null,
+                                             int? skip = null,
                                              params Expression<Func<T, object?>>[] includes)
         {
             IQueryable<T> query = _context.Set<T>();

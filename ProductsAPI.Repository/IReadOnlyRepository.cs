@@ -12,6 +12,7 @@ namespace ProductsApi.Repository
     {
         Task<List<T>> GetAllAsync(Expression<Func<T, bool>>?[] predicates = null,
                                          int? take = null,
+                                         int? skip = null,
                                          params Expression<Func<T, object?>>[] includes);
         Task<T?> GetByIdAsync(int Id);
     }
